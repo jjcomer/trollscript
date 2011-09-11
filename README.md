@@ -16,6 +16,12 @@ or from the command line:
 
     lein run <trollscript here>
 
+or import in your project.clj file
+
+```clojure
+(:dependencies [trollscript "1.0.0"])
+```
+
 ## License
 
 Copyright (C) 2011 Josh Comer

@@ -2,7 +2,6 @@
   (:use [clojure.string :only [lower-case]])
   (:gen-class))
 
-;(def in (input-stream *in*))
 (def MAX_CELLS 30000)
 
 (defn split-code
@@ -46,9 +45,9 @@
       (loop [new-pc pc depth 0]
         (let [command (nth code new-pc)]
           (case command
-            "llo" ;Increase depth
+            "llo" ;;Increase depth
             (recur (inc new-pc) (inc depth))
-            "lll" ;Decrease depth
+            "lll" ;;Decrease depth
             (if (zero? (dec depth))
               (inc new-pc)
               (recur (inc new-pc) (dec depth)))
@@ -67,9 +66,9 @@
       (loop [new-pc pc depth 0]
         (let [command (nth code new-pc)]
           (case command
-            "lll" ;Increase depth
+            "lll" ;;Increase depth
             (recur (dec new-pc) (inc depth))
-            "llo" ;Decrease depth
+            "llo" ;;Decrease depth
             (if (zero? (dec depth))
               (inc new-pc)
               (recur (dec new-pc) (dec depth)))
@@ -89,25 +88,25 @@
     (if (basic-validation code)
       (loop [data {} pc 0 dp 0 cycles 0]
         (case (nth code pc)
-          "tro" ;Begining of the script
+          "tro" ;;Begining of the script
           (recur data (inc pc) dp cycles)
-          "ll." ;End of the script
+          "ll." ;;End of the script
           (println "\nEND took" cycles "cycle(s) to execute")
-          "ooo" ;Increment the data pointer
+          "ooo" ;;Increment the data pointer
           (recur data (inc pc) (min (inc dp) MAX_CELLS) (inc cycles))
-          "ool" ;Decrement the data pointer
+          "ool" ;;Decrement the data pointer
           (recur data (inc pc) (max (dec dp) 0) (inc cycles))
-          "olo" ;Increment the byte at the data pointer
+          "olo" ;;Increment the byte at the data pointer
           (recur (change-data inc dp data) (inc pc) dp (inc cycles))
-          "oll" ;Decrement the byte at the data pointer
+          "oll" ;;Decrement the byte at the data pointer
           (recur (change-data dec dp data) (inc pc) dp (inc cycles))
-          "loo" ;Output a character (ASCII of byte at data pointer)
+          "loo" ;;Output a character (ASCII of byte at data pointer)
           (recur (output-data data dp) (inc pc) dp (inc cycles))
-          "lol" ;Accept one byte of input (stored at data pointer)
+          "lol" ;;Accept one byte of input (stored at data pointer)
           (recur (get-input data dp) (inc pc) dp (inc cycles))
-          "llo" ;Jump forwared on zero to matching lll
+          "llo" ;;Jump forwared on zero to matching lll
           (recur data (do-jump-forward code pc data dp) dp (inc cycles))
-          "lll" ;Jump back on non-zero to matching llo
+          "lll" ;;Jump back on non-zero to matching llo
           (recur data (do-jump-back code pc data dp) dp (inc cycles))
           (println "INVALID COMMAND")))
       "Malformed trollscript")))
