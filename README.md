@@ -2,6 +2,8 @@
 
 Inspired by [Tom Bell's ruby implementation](https://github.com/tombell/trollscript) of trollscript, I have created a clojure trollscript interpreter.
 
+[![endorse](http://api.coderwall.com/jjcomer/endorsecount.png)](http://coderwall.com/jjcomer)
+
 ## Usage
 
 Using lein, your script can either run from the repl:
